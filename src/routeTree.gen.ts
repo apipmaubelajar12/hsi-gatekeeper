@@ -19,6 +19,7 @@ import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppDormitoriesRouteImport } from './routes/_app/dormitories'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppBecomeAdminRouteImport } from './routes/_app/become-admin'
+import { Route as AppAdminsRouteImport } from './routes/_app/admins'
 import { Route as AppAdminRequestsRouteImport } from './routes/_app/admin-requests'
 import { Route as AppActivityRouteImport } from './routes/_app/activity'
 import { Route as AppPermissionsIndexRouteImport } from './routes/_app/permissions/index'
@@ -73,6 +74,11 @@ const AppBecomeAdminRoute = AppBecomeAdminRouteImport.update({
   path: '/become-admin',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminsRoute = AppAdminsRouteImport.update({
+  id: '/admins',
+  path: '/admins',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminRequestsRoute = AppAdminRequestsRouteImport.update({
   id: '/admin-requests',
   path: '/admin-requests',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof AppActivityRoute
   '/admin-requests': typeof AppAdminRequestsRoute
+  '/admins': typeof AppAdminsRoute
   '/become-admin': typeof AppBecomeAdminRoute
   '/dashboard': typeof AppDashboardRoute
   '/dormitories': typeof AppDormitoriesRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof AppActivityRoute
   '/admin-requests': typeof AppAdminRequestsRoute
+  '/admins': typeof AppAdminsRoute
   '/become-admin': typeof AppBecomeAdminRoute
   '/dashboard': typeof AppDashboardRoute
   '/dormitories': typeof AppDormitoriesRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/activity': typeof AppActivityRoute
   '/_app/admin-requests': typeof AppAdminRequestsRoute
+  '/_app/admins': typeof AppAdminsRoute
   '/_app/become-admin': typeof AppBecomeAdminRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/dormitories': typeof AppDormitoriesRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/admin-requests'
+    | '/admins'
     | '/become-admin'
     | '/dashboard'
     | '/dormitories'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/admin-requests'
+    | '/admins'
     | '/become-admin'
     | '/dashboard'
     | '/dormitories'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/activity'
     | '/_app/admin-requests'
+    | '/_app/admins'
     | '/_app/become-admin'
     | '/_app/dashboard'
     | '/_app/dormitories'
@@ -267,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppBecomeAdminRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admins': {
+      id: '/_app/admins'
+      path: '/admins'
+      fullPath: '/admins'
+      preLoaderRoute: typeof AppAdminsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin-requests': {
       id: '/_app/admin-requests'
       path: '/admin-requests'
@@ -301,6 +320,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppActivityRoute: typeof AppActivityRoute
   AppAdminRequestsRoute: typeof AppAdminRequestsRoute
+  AppAdminsRoute: typeof AppAdminsRoute
   AppBecomeAdminRoute: typeof AppBecomeAdminRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDormitoriesRoute: typeof AppDormitoriesRoute
@@ -316,6 +336,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppActivityRoute: AppActivityRoute,
   AppAdminRequestsRoute: AppAdminRequestsRoute,
+  AppAdminsRoute: AppAdminsRoute,
   AppBecomeAdminRoute: AppBecomeAdminRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDormitoriesRoute: AppDormitoriesRoute,

@@ -25,6 +25,7 @@ const NAV: NavItem[] = [
   { to: "/dormitories", label: "Dormitories", icon: Building2, roles: ["super_admin","admin"] },
   { to: "/ustadz", label: "Ustadz Approvals", icon: ShieldCheck, roles: ["super_admin","admin"] },
   { to: "/admin-requests", label: "Admin Requests", icon: ShieldCheck, roles: ["super_admin","admin"] },
+  { to: "/admins", label: "Manage Admins", icon: ShieldCheck, roles: ["super_admin"] },
   { to: "/become-admin", label: "Request Admin Role", icon: ShieldCheck, roles: ["ustadz"] },
   { to: "/activity", label: "Activity Logs", icon: History, roles: ["super_admin","admin"] },
   { to: "/profile", label: "Profile", icon: UserCircle, roles: ["super_admin","admin","ustadz","student"] },
