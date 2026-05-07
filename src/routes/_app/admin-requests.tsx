@@ -18,7 +18,8 @@ export const Route = createFileRoute("/_app/admin-requests")({
 });
 
 function AdminReq() {
-  const { user } = useAuth();
+  const { user, primaryRole } = useAuth();
+  const isSuperAdmin = primaryRole === "super_admin";
   const [rows, setRows] = useState<any[]>([]);
   const [profs, setProfs] = useState<Record<string, any>>({});
 
