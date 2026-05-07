@@ -9,38 +9,201 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppUstadzRouteImport } from './routes/_app/ustadz'
+import { Route as AppStudentsRouteImport } from './routes/_app/students'
+import { Route as AppScannerRouteImport } from './routes/_app/scanner'
+import { Route as AppQrRouteImport } from './routes/_app/qr'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppDormitoriesRouteImport } from './routes/_app/dormitories'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppBecomeAdminRouteImport } from './routes/_app/become-admin'
+import { Route as AppAdminRequestsRouteImport } from './routes/_app/admin-requests'
+import { Route as AppActivityRouteImport } from './routes/_app/activity'
+import { Route as AppPermissionsIndexRouteImport } from './routes/_app/permissions/index'
+import { Route as AppPermissionsNewRouteImport } from './routes/_app/permissions/new'
 
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppUstadzRoute = AppUstadzRouteImport.update({
+  id: '/ustadz',
+  path: '/ustadz',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStudentsRoute = AppStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppScannerRoute = AppScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppQrRoute = AppQrRouteImport.update({
+  id: '/qr',
+  path: '/qr',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDormitoriesRoute = AppDormitoriesRouteImport.update({
+  id: '/dormitories',
+  path: '/dormitories',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBecomeAdminRoute = AppBecomeAdminRouteImport.update({
+  id: '/become-admin',
+  path: '/become-admin',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRequestsRoute = AppAdminRequestsRouteImport.update({
+  id: '/admin-requests',
+  path: '/admin-requests',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppActivityRoute = AppActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPermissionsIndexRoute = AppPermissionsIndexRouteImport.update({
+  id: '/permissions/',
+  path: '/permissions/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPermissionsNewRoute = AppPermissionsNewRouteImport.update({
+  id: '/permissions/new',
+  path: '/permissions/new',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof AppActivityRoute
+  '/admin-requests': typeof AppAdminRequestsRoute
+  '/become-admin': typeof AppBecomeAdminRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/dormitories': typeof AppDormitoriesRoute
+  '/profile': typeof AppProfileRoute
+  '/qr': typeof AppQrRoute
+  '/scanner': typeof AppScannerRoute
+  '/students': typeof AppStudentsRoute
+  '/ustadz': typeof AppUstadzRoute
+  '/permissions/new': typeof AppPermissionsNewRoute
+  '/permissions/': typeof AppPermissionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof AppActivityRoute
+  '/admin-requests': typeof AppAdminRequestsRoute
+  '/become-admin': typeof AppBecomeAdminRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/dormitories': typeof AppDormitoriesRoute
+  '/profile': typeof AppProfileRoute
+  '/qr': typeof AppQrRoute
+  '/scanner': typeof AppScannerRoute
+  '/students': typeof AppStudentsRoute
+  '/ustadz': typeof AppUstadzRoute
+  '/permissions/new': typeof AppPermissionsNewRoute
+  '/permissions': typeof AppPermissionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/activity': typeof AppActivityRoute
+  '/_app/admin-requests': typeof AppAdminRequestsRoute
+  '/_app/become-admin': typeof AppBecomeAdminRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/dormitories': typeof AppDormitoriesRoute
+  '/_app/profile': typeof AppProfileRoute
+  '/_app/qr': typeof AppQrRoute
+  '/_app/scanner': typeof AppScannerRoute
+  '/_app/students': typeof AppStudentsRoute
+  '/_app/ustadz': typeof AppUstadzRoute
+  '/_app/permissions/new': typeof AppPermissionsNewRoute
+  '/_app/permissions/': typeof AppPermissionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/admin-requests'
+    | '/become-admin'
+    | '/dashboard'
+    | '/dormitories'
+    | '/profile'
+    | '/qr'
+    | '/scanner'
+    | '/students'
+    | '/ustadz'
+    | '/permissions/new'
+    | '/permissions/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/activity'
+    | '/admin-requests'
+    | '/become-admin'
+    | '/dashboard'
+    | '/dormitories'
+    | '/profile'
+    | '/qr'
+    | '/scanner'
+    | '/students'
+    | '/ustadz'
+    | '/permissions/new'
+    | '/permissions'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/activity'
+    | '/_app/admin-requests'
+    | '/_app/become-admin'
+    | '/_app/dashboard'
+    | '/_app/dormitories'
+    | '/_app/profile'
+    | '/_app/qr'
+    | '/_app/scanner'
+    | '/_app/students'
+    | '/_app/ustadz'
+    | '/_app/permissions/new'
+    | '/_app/permissions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +211,128 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/ustadz': {
+      id: '/_app/ustadz'
+      path: '/ustadz'
+      fullPath: '/ustadz'
+      preLoaderRoute: typeof AppUstadzRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/students': {
+      id: '/_app/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof AppStudentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/scanner': {
+      id: '/_app/scanner'
+      path: '/scanner'
+      fullPath: '/scanner'
+      preLoaderRoute: typeof AppScannerRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/qr': {
+      id: '/_app/qr'
+      path: '/qr'
+      fullPath: '/qr'
+      preLoaderRoute: typeof AppQrRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dormitories': {
+      id: '/_app/dormitories'
+      path: '/dormitories'
+      fullPath: '/dormitories'
+      preLoaderRoute: typeof AppDormitoriesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/become-admin': {
+      id: '/_app/become-admin'
+      path: '/become-admin'
+      fullPath: '/become-admin'
+      preLoaderRoute: typeof AppBecomeAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin-requests': {
+      id: '/_app/admin-requests'
+      path: '/admin-requests'
+      fullPath: '/admin-requests'
+      preLoaderRoute: typeof AppAdminRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/activity': {
+      id: '/_app/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof AppActivityRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/permissions/': {
+      id: '/_app/permissions/'
+      path: '/permissions'
+      fullPath: '/permissions/'
+      preLoaderRoute: typeof AppPermissionsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/permissions/new': {
+      id: '/_app/permissions/new'
+      path: '/permissions/new'
+      fullPath: '/permissions/new'
+      preLoaderRoute: typeof AppPermissionsNewRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppActivityRoute: typeof AppActivityRoute
+  AppAdminRequestsRoute: typeof AppAdminRequestsRoute
+  AppBecomeAdminRoute: typeof AppBecomeAdminRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDormitoriesRoute: typeof AppDormitoriesRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppQrRoute: typeof AppQrRoute
+  AppScannerRoute: typeof AppScannerRoute
+  AppStudentsRoute: typeof AppStudentsRoute
+  AppUstadzRoute: typeof AppUstadzRoute
+  AppPermissionsNewRoute: typeof AppPermissionsNewRoute
+  AppPermissionsIndexRoute: typeof AppPermissionsIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppActivityRoute: AppActivityRoute,
+  AppAdminRequestsRoute: AppAdminRequestsRoute,
+  AppBecomeAdminRoute: AppBecomeAdminRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDormitoriesRoute: AppDormitoriesRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppQrRoute: AppQrRoute,
+  AppScannerRoute: AppScannerRoute,
+  AppStudentsRoute: AppStudentsRoute,
+  AppUstadzRoute: AppUstadzRoute,
+  AppPermissionsNewRoute: AppPermissionsNewRoute,
+  AppPermissionsIndexRoute: AppPermissionsIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
