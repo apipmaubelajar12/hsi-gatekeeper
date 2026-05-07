@@ -14,16 +14,266 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          activity: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          user_id: string | null
+        }
+        Insert: {
+          activity: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          user_id?: string | null
+        }
+        Update: {
+          activity?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      admin_requests: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["admin_request_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["admin_request_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["admin_request_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dormitories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      permissions: {
+        Row: {
+          approved_by: string | null
+          checked_in_at: string | null
+          created_at: string
+          destination: string
+          exit_date: string
+          guardian_phone: string | null
+          id: string
+          notes: string | null
+          reason: string
+          return_date: string
+          status: Database["public"]["Enums"]["permission_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved_by?: string | null
+          checked_in_at?: string | null
+          created_at?: string
+          destination: string
+          exit_date: string
+          guardian_phone?: string | null
+          id?: string
+          notes?: string | null
+          reason: string
+          return_date: string
+          status?: Database["public"]["Enums"]["permission_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved_by?: string | null
+          checked_in_at?: string | null
+          created_at?: string
+          destination?: string
+          exit_date?: string
+          guardian_phone?: string | null
+          id?: string
+          notes?: string | null
+          reason?: string
+          return_date?: string
+          status?: Database["public"]["Enums"]["permission_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          approval_status: Database["public"]["Enums"]["approval_status"]
+          avatar_url: string | null
+          created_at: string
+          dormitory_id: string | null
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean
+          parent_name: string | null
+          parent_phone: string | null
+          phone: string | null
+          qr_token: string
+          room: string | null
+          updated_at: string
+        }
+        Insert: {
+          approval_status?: Database["public"]["Enums"]["approval_status"]
+          avatar_url?: string | null
+          created_at?: string
+          dormitory_id?: string | null
+          email: string
+          full_name?: string
+          id: string
+          is_active?: boolean
+          parent_name?: string | null
+          parent_phone?: string | null
+          phone?: string | null
+          qr_token?: string
+          room?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approval_status?: Database["public"]["Enums"]["approval_status"]
+          avatar_url?: string | null
+          created_at?: string
+          dormitory_id?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          parent_name?: string | null
+          parent_phone?: string | null
+          phone?: string | null
+          qr_token?: string
+          room?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_dormitory_id_fkey"
+            columns: ["dormitory_id"]
+            isOneToOne: false
+            referencedRelation: "dormitories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ustadz_dormitories: {
+        Row: {
+          created_at: string
+          dormitory_id: string
+          id: string
+          ustadz_id: string
+        }
+        Insert: {
+          created_at?: string
+          dormitory_id: string
+          id?: string
+          ustadz_id: string
+        }
+        Update: {
+          created_at?: string
+          dormitory_id?: string
+          id?: string
+          ustadz_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ustadz_dormitories_dormitory_id_fkey"
+            columns: ["dormitory_id"]
+            isOneToOne: false
+            referencedRelation: "dormitories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      admin_request_status: "pending" | "accepted" | "rejected"
+      app_role: "super_admin" | "admin" | "ustadz" | "student"
+      approval_status: "pending" | "approved" | "rejected"
+      permission_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "late"
+        | "returned"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +400,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      admin_request_status: ["pending", "accepted", "rejected"],
+      app_role: ["super_admin", "admin", "ustadz", "student"],
+      approval_status: ["pending", "approved", "rejected"],
+      permission_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "late",
+        "returned",
+      ],
+    },
   },
 } as const
