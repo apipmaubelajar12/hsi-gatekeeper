@@ -2,9 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_app/admin-requests")({
@@ -12,7 +18,8 @@ export const Route = createFileRoute("/_app/admin-requests")({
 });
 
 function AdminReq() {
-  const { user } = useAuth();
+  const { user, primaryRole } = useAuth();
+  const isSuperAdmin = primaryRole === "super_admin";
   const [rows, setRows] = useState<any[]>([]);
   const [profs, setProfs] = useState<Record<string, any>>({});
 
@@ -41,11 +48,48 @@ function AdminReq() {
     toast.success(`Request ${accept ? "accepted" : "rejected"}`); load();
   };
 
+  const removeOne = async (req: any) => {
+    const { error } = await supabase.from("admin_requests").delete().eq("id", req.id);
+    if (error) return toast.error(error.message);
+    toast.success("Request removed"); load();
+  };
+
+  const clearProcessed = async () => {
+    const { error } = await supabase.from("admin_requests").delete().in("status", ["accepted", "rejected"]);
+    if (error) return toast.error(error.message);
+    toast.success("History cleared"); load();
+  };
+
+  const processedCount = rows.filter((r) => r.status !== "pending").length;
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">Admin Requests</h1>
-        <p className="text-muted-foreground">Review Ustadz requests to be promoted to Admin.</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-3xl font-bold">Admin Requests</h1>
+          <p className="text-muted-foreground">Review Ustadz requests to be promoted to Admin.</p>
+        </div>
+        {isSuperAdmin && processedCount > 0 && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="sm">
+                <Trash2 className="h-4 w-4 mr-2" /> Clear history ({processedCount})
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Clear admin request history?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This permanently deletes all accepted and rejected requests. Pending requests are kept.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={clearProcessed}>Delete</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
       <Card className="shadow-card">
         <CardContent className="p-0">
@@ -66,6 +110,27 @@ function AdminReq() {
                         <Button size="sm" onClick={() => decide(r, true)}>Accept</Button>
                         <Button size="sm" variant="outline" onClick={() => decide(r, false)}>Reject</Button>
                       </>
+                    )}
+                    {isSuperAdmin && r.status !== "pending" && (
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete this request?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This permanently removes the request from history.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => removeOne(r)}>Delete</AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     )}
                   </div>
                 </div>
