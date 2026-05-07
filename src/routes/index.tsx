@@ -63,7 +63,7 @@ function LoginPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.1),transparent_50%)]" />
       <div className="relative min-h-screen grid lg:grid-cols-2">
         <div className="hidden lg:flex flex-col justify-between p-12 text-primary-foreground">
-          <Brand size="lg" />
+          <Brand size="lg" variant="light" />
           <div className="space-y-4">
             <h1 className="text-5xl font-bold leading-tight">Manage student permissions, beautifully.</h1>
             <p className="text-lg opacity-90 max-w-md">
