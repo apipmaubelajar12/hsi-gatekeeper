@@ -1,0 +1,1 @@
+CREATE POLICY "areq_super_admin_delete" ON public.admin_requests FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'super_admin'));
